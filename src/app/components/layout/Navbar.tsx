@@ -1,125 +1,65 @@
 import Image from "next/image";
 import Logo from "@/assets/logo.png";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <div className="bg-[#0C0D10]">
-      <nav
-        className="
-      container
-      mx-auto
-        w-full
-        min-h-18
-        flex items-center justify-between
-        px-4 sm:px-6 lg:px-8
-        gap-4
-      "
-        style={{ backgroundColor: "#0C0D10" }}
-      >
-        {/* Left: Logo */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <Image
-            className="w-6 h-6 sm:w-7 sm:h-7"
-            src={Logo}
-            alt="FitLog Logo"
-            width={600}
-            height={400}
-          />
+    <header className="fixed inset-x-0 top-0 z-50 w-full bg-[#0C0D10]">
+      <nav className="mx-auto flex h-[72px] w-full max-w-[1440px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Image
+              className="h-6 w-6 sm:h-7 sm:w-7"
+              src={Logo}
+              alt="FitLog Logo"
+              width={600}
+              height={400}
+            />
 
-          <span className="text-white font-extrabold text-lg sm:text-xl tracking-tight">
-            FITLOG
-          </span>
-        </div>
+            <span className="text-lg font-extrabold tracking-tight text-white sm:text-xl">
+              FITLOG
+            </span>
+          </div>
+        </Link>
 
-        {/* Center: Nav links */}
         <div className="flex items-center gap-1 sm:gap-2">
-          <button
-            className="
-            px-3 sm:px-4
-            py-1.5
-            rounded-full
-            text-xs sm:text-sm
-            font-medium
-            whitespace-nowrap
-          "
-            style={{
-              backgroundColor: "#1A2312",
-              color: "#CCFF00",
-            }}
+          <Link
+            href="/exercises"
+            className="whitespace-nowrap rounded-full bg-[#1A2312] px-3 py-1.5 text-xs font-medium text-[#CCFF00] sm:px-4 sm:text-sm"
           >
             Workouts
-          </button>
+          </Link>
 
-          <button
-            className="
-            px-3 sm:px-4
-            py-1.5
-            rounded-full
-            text-xs sm:text-sm
-            font-medium
-            whitespace-nowrap
-          "
-            style={{ color: "#9CA3AF" }}
+          <Link
+            href="/plan"
+            className="whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium text-[#9CA3AF] sm:px-4 sm:text-sm"
           >
             My Plan
-          </button>
+          </Link>
         </div>
 
-        {/* Right: Plan & Saved counters */}
-        <div className="flex items-center gap-3 sm:gap-6 shrink-0">
-          {/* Plan */}
+        <div className="flex shrink-0 items-center gap-3 sm:gap-6">
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <span
-              className="text-xs sm:text-sm font-medium"
-              style={{ color: "#FFFFFF" }}
-            >
+            <span className="text-xs font-medium text-white sm:text-sm">
               Plan
             </span>
 
-            <span
-              className="
-              flex items-center justify-center
-              w-5 h-5
-              rounded-full
-              text-[10px] sm:text-xs
-              font-bold
-            "
-              style={{
-                backgroundColor: "#CCFF00",
-                color: "#000000",
-              }}
-            >
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#CCFF00] text-[10px] font-bold text-black sm:text-xs">
               0
             </span>
           </div>
 
-          {/* Saved */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <span
-              className="text-xs sm:text-sm font-medium"
-              style={{ color: "#9CA3AF" }}
-            >
+            <span className="text-xs font-medium text-[#9CA3AF] sm:text-sm">
               Saved
             </span>
 
-            <span
-              className="
-              flex items-center justify-center
-              w-5 h-5
-              rounded-full
-              text-[10px] sm:text-xs
-              font-bold
-            "
-              style={{
-                backgroundColor: "#D1D5DB",
-                color: "#000000",
-              }}
-            >
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D1D5DB] text-[10px] font-bold text-black sm:text-xs">
               0
             </span>
           </div>
         </div>
       </nav>
-    </div>
+    </header>
   );
 }

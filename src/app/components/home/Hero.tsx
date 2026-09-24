@@ -1,35 +1,37 @@
 import Image from "next/image";
 import Banner from "@/assets/banner.png";
+import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="container mx-auto mt-8 px-4 sm:mt-10 sm:px-6 lg:mt-15 lg:px-0 ">
+    <section className="mx-auto w-full max-w-[1440px] px-4 pt-8 sm:px-6 lg:px-8">
       <div
         className="
-          min-h-130
-          w-full
-          rounded-2xl
-          bg-[#1A1D23]
           flex
+          min-h-[520px]
+          w-full
           flex-col
           items-center
           justify-between
           gap-10
           overflow-hidden
-          px-6 py-10
-          
-          sm:px-8 sm:py-12
-          
-          lg:min-h-122
+          rounded-2xl
+          bg-[#1A1D23]
+          px-6
+          py-10
+
+          sm:px-8
+          sm:py-12
+
+          lg:min-h-[488px]
           lg:flex-row
           lg:gap-8
           lg:px-12
           lg:py-10
-          
+
           xl:px-20
         "
       >
-        {/* Hero Content */}
         <div className="w-full max-w-2xl text-center lg:text-left">
           <p className="text-[10px] font-bold tracking-wider text-[#C2F800] sm:text-[11px]">
             WORKOUT LIBRARY
@@ -42,13 +44,13 @@ const Hero = () => {
               font-extrabold
               leading-tight
               text-white
-              
+
               sm:text-4xl
-              
+
               md:text-5xl
-              
+
               lg:text-[52px]
-              
+
               xl:text-[60px]
             "
           >
@@ -65,9 +67,9 @@ const Hero = () => {
               text-sm
               leading-6
               text-[#9CA3AF]
-              
+
               sm:text-[15px]
-              
+
               lg:mx-0
               lg:text-[16px]
             "
@@ -76,12 +78,16 @@ const Hero = () => {
             into today&apos;s plan, and watch the weeks work add up.
           </p>
 
-          <button
+          <Link
+            href="/exercises"
             className="
               mt-7
+              flex
               h-10
               w-full
-              max-w-44.75
+              max-w-[179px]
+              items-center
+              justify-center
               rounded-md
               bg-[#C2F800]
               text-xs
@@ -90,17 +96,16 @@ const Hero = () => {
               transition
               hover:bg-[#d0ff29]
               active:scale-95
-              
+
               sm:mt-8
-              
+
               lg:mt-10
             "
           >
             BROWSE WORKOUTS
-          </button>
+          </Link>
         </div>
 
-        {/* Hero Image */}
         <div className="flex w-full items-center justify-center lg:w-[42%] lg:justify-end">
           <Image
             src={Banner}
@@ -110,13 +115,13 @@ const Hero = () => {
               h-auto
               w-55
               object-contain
-              
+
               sm:w-70
-              
+
               md:w-82.5
-              
+
               lg:w-90
-              
+
               xl:w-105
             "
           />
