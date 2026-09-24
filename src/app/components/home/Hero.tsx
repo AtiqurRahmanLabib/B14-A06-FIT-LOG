@@ -4,11 +4,11 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="mx-auto w-full max-w-[1440px] px-4 pt-8 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-360 px-4 pt-8 sm:px-6 lg:px-8">
       <div
         className="
           flex
-          min-h-[520px]
+          min-h-130
           w-full
           flex-col
           items-center
@@ -23,7 +23,7 @@ const Hero = () => {
           sm:px-8
           sm:py-12
 
-          lg:min-h-[488px]
+          lg:min-h-122
           lg:flex-row
           lg:gap-8
           lg:px-12
@@ -32,7 +32,7 @@ const Hero = () => {
           xl:px-20
         "
       >
-        <div className="w-full max-w-2xl text-center lg:text-left">
+        <div className="w-full max-w-2xl text-left lg:text-left">
           <p className="text-[10px] font-bold tracking-wider text-[#C2F800] sm:text-[11px]">
             WORKOUT LIBRARY
           </p>
@@ -85,7 +85,7 @@ const Hero = () => {
               flex
               h-10
               w-full
-              max-w-[179px]
+              max-w-44.75
               items-center
               justify-center
               rounded-md

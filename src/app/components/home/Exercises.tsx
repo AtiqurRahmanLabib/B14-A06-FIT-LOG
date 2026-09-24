@@ -19,7 +19,7 @@ const Exercises = async () => {
   const exercises = await fetchExercises();
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
+    <main className="mx-auto w-full max-w-360 px-4 py-8 sm:px-6 lg:px-8">
       <div className="min-w-0">
         <h1 className="text-2xl font-bold text-white sm:text-3xl">
           THE LIBRARY

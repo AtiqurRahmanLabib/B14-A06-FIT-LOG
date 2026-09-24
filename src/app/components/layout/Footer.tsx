@@ -8,9 +8,9 @@ export default function Footer() {
         className="
           mx-auto
           flex
-          min-h-[101px]
+          min-h-25.25
           w-full
-          max-w-[1440px]
+          max-w-360
           flex-col
           items-center
           justify-center

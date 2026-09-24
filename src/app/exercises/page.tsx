@@ -17,7 +17,7 @@ const ExercisesPage = async () => {
   const exercises = await fetchExercises();
 
   return (
-    <main className="mx-auto w-full max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
+    <main className="mx-auto w-full max-w-360 px-10 py-10 sm:px-6 lg:px-8">
       <div className="min-w-0">
         <h1 className="text-2xl font-bold text-white sm:text-3xl">
           THE LIBRARY
@@ -34,7 +34,7 @@ const ExercisesPage = async () => {
             w-full
             min-w-0
             grid-cols-1
-            gap-5
+            gap-6
             sm:grid-cols-2
             xl:grid-cols-3
           "

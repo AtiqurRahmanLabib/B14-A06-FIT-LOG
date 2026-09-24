@@ -9,12 +9,12 @@ interface ExercisePropType {
 
 const ExerciseCard = ({ exercise }: ExercisePropType) => {
   return (
-    <Link href={""}>
+    <Link href={`/exercises/${exercise.id}`}>
       <div
         className="
       mx-auto
       w-full
-      max-w-[394px]
+      max-w-98.5
       overflow-hidden
       rounded-2xl
       border
