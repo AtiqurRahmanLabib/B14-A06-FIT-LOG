@@ -8,6 +8,7 @@ import { useContext } from "react";
 
 import { ExerciseContext } from "@/context/ExerciseContext";
 import { IExercise } from "../../../../Types/Type";
+import toast from "react-hot-toast";
 
 interface PlanCardProps {
   exercise: IExercise;
@@ -16,18 +17,15 @@ interface PlanCardProps {
 const SaveCard = ({ exercise }: PlanCardProps) => {
   const { setAddSave } = useContext(ExerciseContext);
 
-  // Remove exercise from today's plan
-  
   const handleRemove = () => {
     setAddSave((previousSaved) =>
       previousSaved.filter(
         (savedExercise) => savedExercise.id !== exercise.id,
       ),
     );
+    toast.success(`${exercise.name} removed from saved exercises`);
+
   };
-
-
-  // Mark exercise as completed
 
   return (
     <div
@@ -43,8 +41,6 @@ const SaveCard = ({ exercise }: PlanCardProps) => {
         sm:items-center
       "
     >
-      {/* Image */}
-
       <div className="relative h-20 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-36">
         <Image
           src={exercise.image}
@@ -54,8 +50,6 @@ const SaveCard = ({ exercise }: PlanCardProps) => {
           className="object-cover"
         />
       </div>
-
-      {/* Exercise Info */}
 
       <div className="min-w-0 flex-1">
         <h3 className="truncate text-base font-extrabold uppercase text-white">
@@ -82,11 +76,7 @@ const SaveCard = ({ exercise }: PlanCardProps) => {
         </div>
       </div>
 
-      {/* Actions */}
-
       <div className="flex shrink-0 items-center gap-2">
-        {/* View Details */}
-
         <Link
           href={`/exercises/${exercise.id}`}
           className="
@@ -102,10 +92,6 @@ const SaveCard = ({ exercise }: PlanCardProps) => {
         >
           View Details
         </Link>
-
-        {/* Mark as Done */}
-
-        {/* Remove */}
 
         <button
           type="button"

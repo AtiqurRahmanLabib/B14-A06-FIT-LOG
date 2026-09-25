@@ -65,17 +65,14 @@ const DetailsPage = async ({ params }: ParamsPropType) => {
         </div>
 
         <div className="min-w-0">
-          {/* Title */}
           <h1 className="mb-3 text-2xl font-extrabold uppercase leading-tight text-white sm:text-3xl lg:text-4xl">
             {exercise.name}
           </h1>
 
-          {/* Description */}
           <p className="mb-5 text-sm leading-6 text-[#9CA3AF] sm:text-base">
             {exercise.description}
           </p>
 
-          {/* Muscle Groups */}
           <div className="mb-7 flex flex-wrap gap-2">
             {exercise.muscleGroups.map((group) => (
               <span

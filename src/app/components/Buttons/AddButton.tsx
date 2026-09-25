@@ -3,6 +3,7 @@ import { ExerciseContext } from "@/context/ExerciseContext";
 import React, { useContext } from "react";
 import { MdOutlineDateRange } from "react-icons/md";
 import { IExercise } from "../../../../Types/Type";
+import toast from "react-hot-toast";
 
 const AddButton = ({ exercise }: { exercise: IExercise }) => {
   const { addPlan, setAddPlan } = useContext(ExerciseContext);
@@ -11,12 +12,13 @@ const AddButton = ({ exercise }: { exercise: IExercise }) => {
     const alreadyAdded = addPlan.some((plan) => plan.id === exercise.id);
 
     if (alreadyAdded) {
-      console.error("Already in your plan!");
+      toast.error(`${exercise.name} is already in today's plan`);
       return;
     }
 
     setAddPlan([...addPlan, exercise]);
-    console.log(addPlan)
+    toast.success(`${exercise.name} added to today's plan`);
+    console.log(addPlan);
   };
   return (
     <div>

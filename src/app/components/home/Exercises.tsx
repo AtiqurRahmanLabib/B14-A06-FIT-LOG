@@ -1,4 +1,3 @@
-// import { IExercise } from "../../../Types/Type";
 import ExercisesCard from "../exercises/ExerciseCard";
 
 import { IExercise } from "../../../../Types/Type";

@@ -20,11 +20,7 @@ const ExerciseCard = ({ exercise }: ExercisePropType) => {
       border
       border-transparent
       bg-[#15171D]
-      // transition-all
-      // duration-300
-      // hover:-translate-y-
       hover:border-[#CCFF00]
-      // hover:shadow-[0_0_20px_rgba(204,255,0,0.18)]
     "
         style={{ backgroundColor: "#15171D" }}
       >

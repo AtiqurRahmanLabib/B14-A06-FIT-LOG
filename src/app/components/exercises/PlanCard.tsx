@@ -8,6 +8,7 @@ import { useContext } from "react";
 
 import { ExerciseContext } from "@/context/ExerciseContext";
 import { IExercise } from "../../../../Types/Type";
+import toast from "react-hot-toast";
 
 interface PlanCardProps {
   exercise: IExercise;
@@ -16,22 +17,18 @@ interface PlanCardProps {
 const PlanCard = ({ exercise }: PlanCardProps) => {
   const { setAddPlan } = useContext(ExerciseContext);
 
-  // Remove exercise from today's plan
   const handleRemove = () => {
     setAddPlan((previousPlan) =>
-      previousPlan.filter(
-        (plan) => plan.id !== exercise.id
-      )
+      previousPlan.filter((plan) => plan.id !== exercise.id),
     );
+    toast.success(`${exercise.name} removed from today's plan`);
   };
 
-  // Mark exercise as completed
   const handleMarkAsDone = () => {
     setAddPlan((previousPlan) =>
-      previousPlan.filter(
-        (plan) => plan.id !== exercise.id
-      )
+      previousPlan.filter((plan) => plan.id !== exercise.id),
     );
+    toast.success(`${exercise.name} marked as done`);
   };
 
   return (
@@ -48,8 +45,6 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
         sm:items-center
       "
     >
-      {/* Image */}
-
       <div className="relative h-20 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-36">
         <Image
           src={exercise.image}
@@ -60,16 +55,12 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
         />
       </div>
 
-      {/* Exercise Info */}
-
       <div className="min-w-0 flex-1">
         <h3 className="truncate text-base font-extrabold uppercase text-white">
           {exercise.name}
         </h3>
 
-        <p className="mt-0.5 text-sm text-[#8A92A0]">
-          {exercise.muscleGroups}
-        </p>
+        <p className="mt-0.5 text-sm text-[#8A92A0]">{exercise.muscleGroups}</p>
 
         <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[#C5C9D0]">
           <span className="flex items-center gap-1">
@@ -89,11 +80,7 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
         </div>
       </div>
 
-      {/* Actions */}
-
       <div className="flex shrink-0 items-center gap-2">
-        {/* View Details */}
-
         <Link
           href={`/exercises/${exercise.id}`}
           className="
@@ -109,8 +96,6 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
         >
           View Details
         </Link>
-
-        {/* Mark as Done */}
 
         <button
           type="button"
@@ -128,8 +113,6 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
         >
           ✓ Mark as Done
         </button>
-
-        {/* Remove */}
 
         <button
           type="button"

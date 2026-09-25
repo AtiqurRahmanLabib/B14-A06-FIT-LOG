@@ -23,10 +23,6 @@ const MyPlanPage = () => {
 
   const activeList = activeTab === "plan" ? addPlan : addSave;
 
-  // -----------------------------
-  // Statistics
-  // -----------------------------
-
   const totalExercises = activeList.length;
 
   const totalMinutes = activeList.reduce(
@@ -38,10 +34,6 @@ const MyPlanPage = () => {
     (sum, exercise) => sum + Number(exercise.caloriesBurned),
     0,
   );
-
-  // -----------------------------
-  // Sorting
-  // -----------------------------
 
   const sortedList = [...activeList].sort((a, b) => {
     let valueA = 0;
@@ -65,20 +57,12 @@ const MyPlanPage = () => {
     return ascending ? valueA - valueB : valueB - valueA;
   });
 
-  // -----------------------------
-  // Handle Sort
-  // -----------------------------
-
   const handleSort = (type: SortType) => {
     if (sortBy === type) {
-      // Same option clicked again
-      // Toggle ascending / descending
       setAscending((prev) => !prev);
     } else {
-      // New sort option
       setSortBy(type);
 
-      // Rating starts descending
       if (type === "rating") {
         setAscending(false);
       } else {
@@ -88,10 +72,6 @@ const MyPlanPage = () => {
 
     setSortOpen(false);
   };
-
-  // -----------------------------
-  // Sort Label
-  // -----------------------------
 
   const getSortLabel = () => {
     if (sortBy === "duration") {
@@ -108,8 +88,6 @@ const MyPlanPage = () => {
   return (
     <div className="mx-auto min-h-screen w-full max-w-360 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
       <div className="w-full">
-        {/* Header */}
-
         <div className="mb-6">
           <h1 className="text-[30px] font-bold text-white sm:text-[32px]">
             MY PLAN
@@ -119,8 +97,6 @@ const MyPlanPage = () => {
             Cap of five lifts for today. Finish them, then load more.
           </p>
         </div>
-
-        {/* Stats */}
 
         <div
           className="
@@ -135,8 +111,6 @@ const MyPlanPage = () => {
           "
           style={{ backgroundColor: "#15171D" }}
         >
-          {/* Exercises */}
-
           <div
             className="
               px-6 py-5
@@ -152,8 +126,6 @@ const MyPlanPage = () => {
             </p>
           </div>
 
-          {/* Minutes */}
-
           <div
             className="
               border-t border-[#252830]
@@ -167,8 +139,6 @@ const MyPlanPage = () => {
 
             <p className="text-2xl font-extrabold text-white">{totalMinutes}</p>
           </div>
-
-          {/* Calories */}
 
           <div
             className="
@@ -186,8 +156,6 @@ const MyPlanPage = () => {
           </div>
         </div>
 
-        {/* Tabs + Sort */}
-
         <div
           className="
             mb-4
@@ -199,8 +167,6 @@ const MyPlanPage = () => {
             sm:justify-between
           "
         >
-          {/* Tabs */}
-
           <div
             className="
               flex
@@ -261,8 +227,6 @@ const MyPlanPage = () => {
             </button>
           </div>
 
-          {/* Sort */}
-
           <div
             className="
               flex
@@ -275,11 +239,7 @@ const MyPlanPage = () => {
           >
             <span className="text-sm text-[#8A92A0]">Sort By</span>
 
-            {/* Dropdown */}
-
             <div className="relative w-full sm:w-auto">
-              {/* Main Button */}
-
               <button
                 type="button"
                 onClick={() => setSortOpen((prev) => !prev)}
@@ -315,8 +275,6 @@ const MyPlanPage = () => {
                 </span>
               </button>
 
-              {/* Dropdown Menu */}
-
               {sortOpen && (
                 <div
                   className="
@@ -338,7 +296,6 @@ const MyPlanPage = () => {
                     backgroundColor: "#15171D",
                   }}
                 >
-                  {/* Duration */}
 
                   <button
                     type="button"
@@ -364,8 +321,6 @@ const MyPlanPage = () => {
                     <span>Duration</span>
                   </button>
 
-                  {/* Calories */}
-
                   <button
                     type="button"
                     onClick={() => handleSort("calories")}
@@ -389,8 +344,6 @@ const MyPlanPage = () => {
                   >
                     <span>Calories</span>
                   </button>
-
-                  {/* Rating */}
 
                   <button
                     type="button"
@@ -420,8 +373,6 @@ const MyPlanPage = () => {
             </div>
           </div>
         </div>
-
-        {/* List / Empty State */}
 
         <div className="min-h-65 w-full rounded-xl">
           {activeList.length === 0 ? (
