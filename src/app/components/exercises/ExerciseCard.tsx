@@ -14,7 +14,7 @@ const ExerciseCard = ({ exercise }: ExercisePropType) => {
         className="
       mx-auto
       w-full
-      max-w-98.5
+      max-w-full
       overflow-hidden
       rounded-2xl
       border

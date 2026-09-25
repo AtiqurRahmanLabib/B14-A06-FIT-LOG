@@ -1,23 +1,28 @@
 "use client";
 
+import Link from "next/link";
+import { useContext, useState } from "react";
+
 import { ExerciseContext } from "@/context/ExerciseContext";
-import React, { useContext, useState } from "react";
-import "@/app/globals.css"
-// import { ChevronDown } from "lucide-react";
+import PlanCard from "../components/exercises/PlanCard";
 
 type TabType = "plan" | "saved";
 
 const MyPlanPage = () => {
   const { addPlan, addSave } = useContext(ExerciseContext);
+
   const [activeTab, setActiveTab] = useState<TabType>("plan");
 
   const activeList = activeTab === "plan" ? addPlan : addSave;
 
+  // Statistics
   const totalExercises = activeList.length;
+
   const totalMinutes = activeList.reduce(
     (sum, exercise) => sum + exercise.duration,
     0,
   );
+
   const totalCalories = activeList.reduce(
     (sum, exercise) => sum + exercise.caloriesBurned,
     0,
@@ -28,22 +33,45 @@ const MyPlanPage = () => {
       className="min-h-screen px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14"
       style={{ backgroundColor: "#0C0D10" }}
     >
-      <div className="mx-auto w-full max-w-360 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-360">
         {/* Header */}
-        <h1 className="font-bold text-[30px] text-white">MY PLAN</h1>
-        <p className="text-[14px] text-[#8A92A0] mb-6">
-          Cap of five lifts for today. Finish them, then load more.
-        </p>
+        <div className="mb-6">
+          <h1 className="text-[30px] font-bold text-white sm:text-[32px]">
+            MY PLAN
+          </h1>
 
-        {/* Stats bar */}
+          <p className="text-[14px] text-[#8A92A0]">
+            Cap of five lifts for today. Finish them, then load more.
+          </p>
+        </div>
+
+        {/* Stats */}
         <div
-          className="rounded-xl px-8 py-6 mb-6 grid grid-cols-3"
+          className="
+            mb-6
+            grid
+            grid-cols-1
+            overflow-hidden
+            rounded-xl
+            border
+            border-[#252830]
+            sm:grid-cols-3
+          "
           style={{ backgroundColor: "#15171D" }}
         >
-          <div>
-            <p className="text-xs mb-1" style={{ color: "#8A92A0" }}>
+          {/* Exercises */}
+          <div
+            className="
+              px-6 py-5
+              sm:px-8 sm:py-6
+              sm:border-r
+              sm:border-[#252830]
+            "
+          >
+            <p className="mb-1 text-xs text-[#8A92A0]">
               Exercises
             </p>
+
             <p
               className="text-2xl font-extrabold"
               style={{ color: "#CCFF00" }}
@@ -51,18 +79,39 @@ const MyPlanPage = () => {
               {totalExercises}
             </p>
           </div>
-          <div>
-            <p className="text-xs mb-1" style={{ color: "#8A92A0" }}>
+
+          {/* Minutes */}
+          <div
+            className="
+              border-t border-[#252830]
+              px-6 py-5
+              sm:border-t-0
+              sm:border-r
+              sm:px-8 sm:py-6
+            "
+          >
+            <p className="mb-1 text-xs text-[#8A92A0]">
               Minutes
             </p>
+
             <p className="text-2xl font-extrabold text-white">
               {totalMinutes}
             </p>
           </div>
-          <div>
-            <p className="text-xs mb-1" style={{ color: "#8A92A0" }}>
+
+          {/* Calories */}
+          <div
+            className="
+              border-t border-[#252830]
+              px-6 py-5
+              sm:border-t-0
+              sm:px-8 sm:py-6
+            "
+          >
+            <p className="mb-1 text-xs text-[#8A92A0]">
               Calories
             </p>
+
             <p className="text-2xl font-extrabold text-white">
               {totalCalories}
             </p>
@@ -70,85 +119,170 @@ const MyPlanPage = () => {
         </div>
 
         {/* Tabs + Sort */}
-        <div className="flex items-center justify-between mb-4">
+        <div
+          className="
+            mb-4
+            flex
+            flex-col
+            gap-4
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+          "
+        >
+          {/* Tabs */}
           <div
-            className="flex items-center gap-1 rounded-full p-1"
+            className="
+              flex
+              w-fit
+              items-center
+              gap-1
+              rounded-full
+              p-1
+            "
             style={{ backgroundColor: "#15171D" }}
           >
             <button
+              type="button"
               onClick={() => setActiveTab("plan")}
-              className="px-4 py-1.5 rounded-full text-sm font-medium transition-colors"
+              className="
+                rounded-full
+                px-4 py-1.5
+                text-sm
+                font-medium
+                transition-colors
+              "
               style={
                 activeTab === "plan"
-                  ? { backgroundColor: "#2D313B", color: "#FFFFFF" }
-                  : { color: "#8A92A0" }
+                  ? {
+                      backgroundColor: "#2D313B",
+                      color: "#FFFFFF",
+                    }
+                  : {
+                      color: "#8A92A0",
+                    }
               }
             >
               Today&apos;s Plan
             </button>
+
             <button
+              type="button"
               onClick={() => setActiveTab("saved")}
-              className="px-4 py-1.5 rounded-full text-sm font-bold transition-colors"
+              className="
+                rounded-full
+                px-4 py-1.5
+                text-sm
+                font-medium
+                transition-colors
+              "
               style={
                 activeTab === "saved"
-                  ? { backgroundColor: "#2D313B", color: "#FFFFFF" }
-                  : { color: "#8A92A0" }
+                  ? {
+                      backgroundColor: "#2D313B",
+                      color: "#FFFFFF",
+                    }
+                  : {
+                      color: "#8A92A0",
+                    }
               }
             >
               Saved
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-sm" style={{ color: "#8A92A0" }}>
+          {/* Sort */}
+          <div
+            className="
+              flex
+              flex-col
+              gap-2
+              sm:flex-row
+              sm:items-center
+              sm:gap-3
+            "
+          >
+            <span className="text-sm text-[#8A92A0]">
               Sort By
             </span>
+
             <button
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm text-white border"
+              type="button"
+              className="
+                flex
+                w-full
+                items-center
+                justify-between
+                rounded-lg
+                border
+                px-3 py-2
+                text-sm
+                text-white
+                sm:w-auto
+                sm:min-w-30
+                sm:py-1.5
+              "
               style={{ borderColor: "#2D313B" }}
             >
               Duration
-              {/* <ChevronDown size={14} /> */}
+
+              <span className="text-xs text-[#8A92A0]">
+               ⌄
+              </span>
             </button>
           </div>
         </div>
 
-        {/* List / Empty state */}
+        {/* List / Empty State */}
         <div
-          className="rounded-xl border border-dashed min-h-65 flex items-center justify-center"
+          className="
+            min-h-65
+            rounded-xl
+          "
           style={{ borderColor: "#2D313B" }}
         >
-          {totalExercises === 0 ? (
-            <div className="text-center">
-              <h2 className="text-white font-extrabold text-lg mb-1">
-                NOTHING HERE YET
-              </h2>
-              <p className="text-sm mb-5" style={{ color: "#8A92A0" }}>
-                Browse the library and add a lift to get today moving.
-              </p>
-              <a
-                href="/workouts"
-                className="inline-block px-5 py-2.5 rounded-full text-sm font-bold"
-                style={{ backgroundColor: "#CCFF00", color: "#000000" }}
-              >
-                Go to workouts
-              </a>
+          {activeList.length === 0 ? (
+            <div className="flex min-h-65 items-center justify-center px-4">
+              <div className="text-center">
+                <h2 className="mb-1 text-lg font-extrabold text-white">
+                  {activeTab === "plan"
+                    ? "NOTHING HERE YET"
+                    : "NO SAVED EXERCISES"}
+                </h2>
+
+                <p className="mb-5 text-sm text-[#8A92A0]">
+                  {activeTab === "plan"
+                    ? "Browse the library and add a lift to get today moving."
+                    : "Save your favorite exercises and they will appear here."}
+                </p>
+
+                <Link
+                  href="/exercises"
+                  className="
+                    inline-block
+                    rounded-full
+                    px-5 py-2.5
+                    text-sm
+                    font-bold
+                    transition
+                    hover:opacity-90
+                  "
+                  style={{
+                    backgroundColor: "#CCFF00",
+                    color: "#000000",
+                  }}
+                >
+                  Go to workouts
+                </Link>
+              </div>
             </div>
           ) : (
-            <div className="w-full px-6 py-6 space-y-3">
+            <div className="w-full space-y-3 px-3 py-3 sm:px-6 sm:py-6">
               {activeList.map((exercise) => (
-                <div
+                <PlanCard
                   key={exercise.id}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg"
-                  style={{ backgroundColor: "#1A1D24" }}
-                >
-                  <span className="text-white font-medium">
-                    {exercise.name}
-                  </span>
-                  <span className="text-sm" style={{ color: "#8A92A0" }}>
-                    {exercise.duration} min · {exercise.caloriesBurned} kcal
-                  </span>
-                </div>
+                  exercise={exercise}
+                />
               ))}
             </div>
           )}
