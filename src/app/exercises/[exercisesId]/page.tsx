@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { IExercise } from "../../../../Types/Type";
 import "../../globals.css";
+import AddButton from "@/app/components/Buttons/AddButton";
+import AddSaveButton from "@/app/components/Buttons/AddSaveButton";
 
 interface ParamsPropType {
   params: Promise<{
@@ -129,24 +131,9 @@ const DetailsPage = async ({ params }: ParamsPropType) => {
           </section>
 
           <div className="flex flex-col gap-3 pb-4 sm:flex-row">
-            <button
-              className="w-full rounded-full px-5 py-3 text-sm font-bold transition hover:opacity-90 sm:w-auto"
-              style={{
-                backgroundColor: "#CCFF00",
-                color: "#000000",
-              }}
-            >
-              Add to today&apos;s plan
-            </button>
+            <AddButton exercise={exercise}></AddButton>
 
-            <button
-              className="w-full rounded-full border px-5 py-3 text-sm font-medium text-white transition hover:bg-[#1E2330] sm:w-auto"
-              style={{
-                borderColor: "#2D313B",
-              }}
-            >
-              Save for later
-            </button>
+            <AddSaveButton exercise={exercise}></AddSaveButton>
           </div>
         </div>
       </div>
