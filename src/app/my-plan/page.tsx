@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 
 import { ExerciseContext } from "@/context/ExerciseContext";
 import PlanCard from "../components/exercises/PlanCard";
+import SaveCard from "../components/exercises/SaveCard";
 
 type TabType = "plan" | "saved";
 
@@ -29,12 +30,10 @@ const MyPlanPage = () => {
   );
 
   return (
-    <div
-      className="min-h-screen px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14"
-      style={{ backgroundColor: "#0C0D10" }}
-    >
-      <div className="mx-auto w-full max-w-360">
+    <div className="mx-auto min-h-screen w-full max-w-360 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
+      <div className="w-full">
         {/* Header */}
+
         <div className="mb-6">
           <h1 className="text-[30px] font-bold text-white sm:text-[32px]">
             MY PLAN
@@ -46,6 +45,7 @@ const MyPlanPage = () => {
         </div>
 
         {/* Stats */}
+
         <div
           className="
             mb-6
@@ -60,12 +60,13 @@ const MyPlanPage = () => {
           style={{ backgroundColor: "#15171D" }}
         >
           {/* Exercises */}
+
           <div
             className="
               px-6 py-5
-              sm:px-8 sm:py-6
               sm:border-r
               sm:border-[#252830]
+              sm:px-8 sm:py-6
             "
           >
             <p className="mb-1 text-xs text-[#8A92A0]">
@@ -81,6 +82,7 @@ const MyPlanPage = () => {
           </div>
 
           {/* Minutes */}
+
           <div
             className="
               border-t border-[#252830]
@@ -100,6 +102,7 @@ const MyPlanPage = () => {
           </div>
 
           {/* Calories */}
+
           <div
             className="
               border-t border-[#252830]
@@ -119,6 +122,7 @@ const MyPlanPage = () => {
         </div>
 
         {/* Tabs + Sort */}
+
         <div
           className="
             mb-4
@@ -131,6 +135,7 @@ const MyPlanPage = () => {
           "
         >
           {/* Tabs */}
+
           <div
             className="
               flex
@@ -192,6 +197,7 @@ const MyPlanPage = () => {
           </div>
 
           {/* Sort */}
+
           <div
             className="
               flex
@@ -227,20 +233,15 @@ const MyPlanPage = () => {
               Duration
 
               <span className="text-xs text-[#8A92A0]">
-               ⌄
+                ⌄
               </span>
             </button>
           </div>
         </div>
 
         {/* List / Empty State */}
-        <div
-          className="
-            min-h-65
-            rounded-xl
-          "
-          style={{ borderColor: "#2D313B" }}
-        >
+
+        <div className="min-h-65 w-full rounded-xl">
           {activeList.length === 0 ? (
             <div className="flex min-h-65 items-center justify-center px-4">
               <div className="text-center">
@@ -277,13 +278,20 @@ const MyPlanPage = () => {
               </div>
             </div>
           ) : (
-            <div className="w-full space-y-3 px-3 py-3 sm:px-6 sm:py-6">
-              {activeList.map((exercise) => (
-                <PlanCard
-                  key={exercise.id}
-                  exercise={exercise}
-                />
-              ))}
+            <div className="w-full space-y-3 py-3">
+              {activeList.map((exercise) =>
+                activeTab === "plan" ? (
+                  <PlanCard
+                    key={exercise.id}
+                    exercise={exercise}
+                  />
+                ) : (
+                  <SaveCard
+                    key={exercise.id}
+                    exercise={exercise}
+                  />
+                ),
+              )}
             </div>
           )}
         </div>

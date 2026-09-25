@@ -9,60 +9,56 @@ import { useContext } from "react";
 import { ExerciseContext } from "@/context/ExerciseContext";
 import { IExercise } from "../../../../Types/Type";
 
-interface PlanCardProps {
+interface SaveCardProps {
   exercise: IExercise;
 }
 
-const PlanCard = ({ exercise }: PlanCardProps) => {
-  const { setAddPlan } = useContext(ExerciseContext);
+const SaveCard = ({ exercise }: SaveCardProps) => {
+  const { setAddSave } = useContext(ExerciseContext);
 
-  // Remove exercise from today's plan
+  // Remove exercise from saved list
   const handleRemove = () => {
-    setAddPlan((previousPlan) =>
-      previousPlan.filter(
-        (plan) => plan.id !== exercise.id
-      )
-    );
-  };
-
-  // Mark exercise as completed
-  const handleMarkAsDone = () => {
-    setAddPlan((previousPlan) =>
-      previousPlan.filter(
-        (plan) => plan.id !== exercise.id
-      )
+    setAddSave((previousSaved) =>
+      previousSaved.filter(
+        (savedExercise) => savedExercise.id !== exercise.id,
+      ),
     );
   };
 
   return (
     <div
       className="
-        flex flex-col gap-4
-        rounded-2xl
-        border border-[#2D313B]
+        flex
+        h-30
+        w-full
+        items-center
+        gap-4
+        rounded-xl
+        border
+        border-[#252830]
         bg-[#191B21]
-        p-5
+        px-3
+        py-3
         transition
         hover:border-[#3A3F4A]
-        sm:flex-row
-        sm:items-center
+        sm:px-4
       "
     >
       {/* Image */}
 
       <div className="relative h-20 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-36">
-        <Image
-          src={exercise.image}
-          alt={exercise.name}
-          fill
-          sizes="144px"
-          className="object-cover"
-        />
-      </div>
+             <Image
+               src={exercise.image}
+               alt={exercise.name}
+               fill
+               sizes="144px"
+               className="object-cover"
+             />
+           </div>
 
       {/* Exercise Info */}
 
-      <div className="min-w-0 flex-1">
+    <div className="min-w-0 flex-1">
         <h3 className="truncate text-base font-extrabold uppercase text-white">
           {exercise.name}
         </h3>
@@ -91,10 +87,10 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
 
       {/* Actions */}
 
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-center gap-3">
         {/* View Details */}
 
-        <Link
+         <Link
           href={`/exercises/${exercise.id}`}
           className="
             rounded-full
@@ -110,34 +106,19 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
           View Details
         </Link>
 
-        {/* Mark as Done */}
-
-        <button
-          type="button"
-          onClick={handleMarkAsDone}
-          className="
-            rounded-full
-            bg-[#CCFF00]
-            px-4 py-2
-            text-xs
-            font-bold
-            text-black
-            transition
-            hover:opacity-90
-          "
-        >
-          ✓ Mark as Done
-        </button>
-
-        {/* Remove */}
+        {/* Remove / Unsave */}
 
         <button
           type="button"
           onClick={handleRemove}
-          aria-label={`Remove ${exercise.name}`}
+          aria-label={`Remove ${exercise.name} from saved`}
           className="
-            flex h-9 w-9
-            items-center justify-center
+            flex
+            h-8
+            w-8
+            shrink-0
+            items-center
+            justify-center
             rounded-full
             text-[#687080]
             transition
@@ -145,11 +126,11 @@ const PlanCard = ({ exercise }: PlanCardProps) => {
             hover:text-white
           "
         >
-          <FiX size={18} />
+          <FiX size={15} />
         </button>
       </div>
     </div>
   );
 };
 
-export default PlanCard;
+export default SaveCard;
