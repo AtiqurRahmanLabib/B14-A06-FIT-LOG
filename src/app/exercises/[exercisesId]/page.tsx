@@ -142,3 +142,4 @@ const DetailsPage = async ({ params }: ParamsPropType) => {
 };
 
 export default DetailsPage;
+

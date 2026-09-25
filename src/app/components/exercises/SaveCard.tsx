@@ -9,14 +9,15 @@ import { useContext } from "react";
 import { ExerciseContext } from "@/context/ExerciseContext";
 import { IExercise } from "../../../../Types/Type";
 
-interface SaveCardProps {
+interface PlanCardProps {
   exercise: IExercise;
 }
 
-const SaveCard = ({ exercise }: SaveCardProps) => {
+const SaveCard = ({ exercise }: PlanCardProps) => {
   const { setAddSave } = useContext(ExerciseContext);
 
-  // Remove exercise from saved list
+  // Remove exercise from today's plan
+  
   const handleRemove = () => {
     setAddSave((previousSaved) =>
       previousSaved.filter(
@@ -25,47 +26,43 @@ const SaveCard = ({ exercise }: SaveCardProps) => {
     );
   };
 
+
+  // Mark exercise as completed
+
   return (
     <div
       className="
-        flex
-        h-30
-        w-full
-        items-center
-        gap-4
-        rounded-xl
-        border
-        border-[#252830]
+        flex flex-col gap-4
+        rounded-2xl
+        border border-[#2D313B]
         bg-[#191B21]
-        px-3
-        py-3
+        p-5
         transition
         hover:border-[#3A3F4A]
-        sm:px-4
+        sm:flex-row
+        sm:items-center
       "
     >
       {/* Image */}
 
       <div className="relative h-20 shrink-0 overflow-hidden rounded-xl sm:h-20 sm:w-36">
-             <Image
-               src={exercise.image}
-               alt={exercise.name}
-               fill
-               sizes="144px"
-               className="object-cover"
-             />
-           </div>
+        <Image
+          src={exercise.image}
+          alt={exercise.name}
+          fill
+          sizes="144px"
+          className="object-cover"
+        />
+      </div>
 
       {/* Exercise Info */}
 
-    <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1">
         <h3 className="truncate text-base font-extrabold uppercase text-white">
           {exercise.name}
         </h3>
 
-        <p className="mt-0.5 text-sm text-[#8A92A0]">
-          {exercise.muscleGroups}
-        </p>
+        <p className="mt-0.5 text-sm text-[#8A92A0]">{exercise.muscleGroups}</p>
 
         <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-[#C5C9D0]">
           <span className="flex items-center gap-1">
@@ -87,10 +84,10 @@ const SaveCard = ({ exercise }: SaveCardProps) => {
 
       {/* Actions */}
 
-      <div className="flex shrink-0 items-center gap-3">
+      <div className="flex shrink-0 items-center gap-2">
         {/* View Details */}
 
-         <Link
+        <Link
           href={`/exercises/${exercise.id}`}
           className="
             rounded-full
@@ -106,16 +103,18 @@ const SaveCard = ({ exercise }: SaveCardProps) => {
           View Details
         </Link>
 
-        {/* Remove / Unsave */}
+        {/* Mark as Done */}
+
+        {/* Remove */}
 
         <button
           type="button"
           onClick={handleRemove}
           aria-label={`Remove ${exercise.name} from saved`}
           className="
+            ml-2
             flex
-            h-8
-            w-8
+            h-8 w-8
             shrink-0
             items-center
             justify-center

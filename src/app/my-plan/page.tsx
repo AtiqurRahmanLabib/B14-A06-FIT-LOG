@@ -8,26 +8,102 @@ import PlanCard from "../components/exercises/PlanCard";
 import SaveCard from "../components/exercises/SaveCard";
 
 type TabType = "plan" | "saved";
+type SortType = "duration" | "calories" | "rating";
 
 const MyPlanPage = () => {
   const { addPlan, addSave } = useContext(ExerciseContext);
 
   const [activeTab, setActiveTab] = useState<TabType>("plan");
 
+  const [sortBy, setSortBy] = useState<SortType>("duration");
+
+  const [sortOpen, setSortOpen] = useState(false);
+
+  const [ascending, setAscending] = useState(true);
+
   const activeList = activeTab === "plan" ? addPlan : addSave;
 
+  // -----------------------------
   // Statistics
+  // -----------------------------
+
   const totalExercises = activeList.length;
 
   const totalMinutes = activeList.reduce(
-    (sum, exercise) => sum + exercise.duration,
+    (sum, exercise) => sum + Number(exercise.duration),
     0,
   );
 
   const totalCalories = activeList.reduce(
-    (sum, exercise) => sum + exercise.caloriesBurned,
+    (sum, exercise) => sum + Number(exercise.caloriesBurned),
     0,
   );
+
+  // -----------------------------
+  // Sorting
+  // -----------------------------
+
+  const sortedList = [...activeList].sort((a, b) => {
+    let valueA = 0;
+    let valueB = 0;
+
+    if (sortBy === "duration") {
+      valueA = Number(a.duration);
+      valueB = Number(b.duration);
+    }
+
+    if (sortBy === "calories") {
+      valueA = Number(a.caloriesBurned);
+      valueB = Number(b.caloriesBurned);
+    }
+
+    if (sortBy === "rating") {
+      valueA = Number(a.rating);
+      valueB = Number(b.rating);
+    }
+
+    return ascending ? valueA - valueB : valueB - valueA;
+  });
+
+  // -----------------------------
+  // Handle Sort
+  // -----------------------------
+
+  const handleSort = (type: SortType) => {
+    if (sortBy === type) {
+      // Same option clicked again
+      // Toggle ascending / descending
+      setAscending((prev) => !prev);
+    } else {
+      // New sort option
+      setSortBy(type);
+
+      // Rating starts descending
+      if (type === "rating") {
+        setAscending(false);
+      } else {
+        setAscending(true);
+      }
+    }
+
+    setSortOpen(false);
+  };
+
+  // -----------------------------
+  // Sort Label
+  // -----------------------------
+
+  const getSortLabel = () => {
+    if (sortBy === "duration") {
+      return "Duration";
+    }
+
+    if (sortBy === "calories") {
+      return "Calories";
+    }
+
+    return "Rating";
+  };
 
   return (
     <div className="mx-auto min-h-screen w-full max-w-360 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-14">
@@ -69,14 +145,9 @@ const MyPlanPage = () => {
               sm:px-8 sm:py-6
             "
           >
-            <p className="mb-1 text-xs text-[#8A92A0]">
-              Exercises
-            </p>
+            <p className="mb-1 text-xs text-[#8A92A0]">Exercises</p>
 
-            <p
-              className="text-2xl font-extrabold"
-              style={{ color: "#CCFF00" }}
-            >
+            <p className="text-2xl font-extrabold" style={{ color: "#CCFF00" }}>
               {totalExercises}
             </p>
           </div>
@@ -92,13 +163,9 @@ const MyPlanPage = () => {
               sm:px-8 sm:py-6
             "
           >
-            <p className="mb-1 text-xs text-[#8A92A0]">
-              Minutes
-            </p>
+            <p className="mb-1 text-xs text-[#8A92A0]">Minutes</p>
 
-            <p className="text-2xl font-extrabold text-white">
-              {totalMinutes}
-            </p>
+            <p className="text-2xl font-extrabold text-white">{totalMinutes}</p>
           </div>
 
           {/* Calories */}
@@ -111,9 +178,7 @@ const MyPlanPage = () => {
               sm:px-8 sm:py-6
             "
           >
-            <p className="mb-1 text-xs text-[#8A92A0]">
-              Calories
-            </p>
+            <p className="mb-1 text-xs text-[#8A92A0]">Calories</p>
 
             <p className="text-2xl font-extrabold text-white">
               {totalCalories}
@@ -208,34 +273,151 @@ const MyPlanPage = () => {
               sm:gap-3
             "
           >
-            <span className="text-sm text-[#8A92A0]">
-              Sort By
-            </span>
+            <span className="text-sm text-[#8A92A0]">Sort By</span>
 
-            <button
-              type="button"
-              className="
-                flex
-                w-full
-                items-center
-                justify-between
-                rounded-lg
-                border
-                px-3 py-2
-                text-sm
-                text-white
-                sm:w-auto
-                sm:min-w-30
-                sm:py-1.5
-              "
-              style={{ borderColor: "#2D313B" }}
-            >
-              Duration
+            {/* Dropdown */}
 
-              <span className="text-xs text-[#8A92A0]">
-                ⌄
-              </span>
-            </button>
+            <div className="relative w-full sm:w-auto">
+              {/* Main Button */}
+
+              <button
+                type="button"
+                onClick={() => setSortOpen((prev) => !prev)}
+                className="
+                  flex
+                  w-full
+                  items-center
+                  justify-between
+                  gap-5
+                  rounded-lg
+                  border
+                  px-3 py-2
+                  text-sm
+                  text-white
+                  transition
+                  hover:bg-[#1E2330]
+                  sm:min-w-32
+                  sm:py-1.5
+                "
+                style={{
+                  borderColor: "#2D313B",
+                  backgroundColor: "#15171D",
+                }}
+              >
+                <span>{getSortLabel()}</span>
+
+                <span
+                  className={`text-xs text-[#8A92A0] transition-transform ${
+                    sortOpen ? "rotate-180" : ""
+                  }`}
+                >
+                  ⌄
+                </span>
+              </button>
+
+              {/* Dropdown Menu */}
+
+              {sortOpen && (
+                <div
+                  className="
+                    absolute
+                    right-0
+                    top-full
+                    z-50
+                    mt-2
+                    w-full
+                    overflow-hidden
+                    rounded-lg
+                    border
+                    border-[#2D313B]
+                    p-1
+                    shadow-xl
+                    sm:w-40
+                  "
+                  style={{
+                    backgroundColor: "#15171D",
+                  }}
+                >
+                  {/* Duration */}
+
+                  <button
+                    type="button"
+                    onClick={() => handleSort("duration")}
+                    className={`
+                      flex
+                      w-full
+                      items-center
+                      justify-between
+                      rounded-md
+                      px-3
+                      py-2
+                      text-left
+                      text-sm
+                      transition
+                      ${
+                        sortBy === "duration"
+                          ? "bg-[#2D313B] text-white"
+                          : "text-[#8A92A0] hover:bg-[#1E2330] hover:text-white"
+                      }
+                    `}
+                  >
+                    <span>Duration</span>
+                  </button>
+
+                  {/* Calories */}
+
+                  <button
+                    type="button"
+                    onClick={() => handleSort("calories")}
+                    className={`
+                      flex
+                      w-full
+                      items-center
+                      justify-between
+                      rounded-md
+                      px-3
+                      py-2
+                      text-left
+                      text-sm
+                      transition
+                      ${
+                        sortBy === "calories"
+                          ? "bg-[#2D313B] text-white"
+                          : "text-[#8A92A0] hover:bg-[#1E2330] hover:text-white"
+                      }
+                    `}
+                  >
+                    <span>Calories</span>
+                  </button>
+
+                  {/* Rating */}
+
+                  <button
+                    type="button"
+                    onClick={() => handleSort("rating")}
+                    className={`
+                      flex
+                      w-full
+                      items-center
+                      justify-between
+                      rounded-md
+                      px-3
+                      py-2
+                      text-left
+                      text-sm
+                      transition
+                      ${
+                        sortBy === "rating"
+                          ? "bg-[#2D313B] text-white"
+                          : "text-[#8A92A0] hover:bg-[#1E2330] hover:text-white"
+                      }
+                    `}
+                  >
+                    <span>Rating</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -279,17 +461,11 @@ const MyPlanPage = () => {
             </div>
           ) : (
             <div className="w-full space-y-3 py-3">
-              {activeList.map((exercise) =>
+              {sortedList.map((exercise) =>
                 activeTab === "plan" ? (
-                  <PlanCard
-                    key={exercise.id}
-                    exercise={exercise}
-                  />
+                  <PlanCard key={exercise.id} exercise={exercise} />
                 ) : (
-                  <SaveCard
-                    key={exercise.id}
-                    exercise={exercise}
-                  />
+                  <SaveCard key={exercise.id} exercise={exercise} />
                 ),
               )}
             </div>

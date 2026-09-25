@@ -1,8 +1,8 @@
 "use client";
 import { ExerciseContext } from "@/context/ExerciseContext";
 import React, { useContext } from "react";
-import { MdOutlineDateRange } from "react-icons/md";
 import { IExercise } from "../../../../Types/Type";
+import { CiBookmark } from "react-icons/ci";
 
 const AddSaveButton = ({ exercise }: { exercise: IExercise }) => {
   const { addSave, setAddSave } = useContext(ExerciseContext);
@@ -16,20 +16,20 @@ const AddSaveButton = ({ exercise }: { exercise: IExercise }) => {
     }
 
     setAddSave([...addSave, exercise]);
-    console.log(addSave)
+    console.log(addSave);
   };
   return (
     <div>
       <button
         onClick={handleAddSave}
-        className="flex w-full items-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition hover:opacity-90 sm:w-auto"
+        className="flex w-full items-center border-[#374151] border gap-2 rounded-full px-5 py-3 text-sm font-bold transition hover:opacity-90 sm:w-auto"
         style={{
-          backgroundColor: "#CCFF00",
-          color: "#000000",
+          // backgroundColor: "#CCFF00",
+          color: "white",
         }}
       >
-        <MdOutlineDateRange className="text-[16px]" />
-        Add to todays plan
+        <CiBookmark className="text-[16px]" />
+        Save for later
       </button>
     </div>
   );
